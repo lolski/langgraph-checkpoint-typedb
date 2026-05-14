@@ -1,0 +1,55 @@
+define
+  entity checkpoint,
+    owns cp_path @key,
+    owns thread_id,
+    owns checkpoint_ns,
+    owns checkpoint_id,
+    owns parent_checkpoint_id,
+    owns cp_type,
+    owns cp_blob,
+    owns md_type,
+    owns md_blob,
+    owns run_id;
+
+  entity checkpoint_blob,
+    owns blob_path @key,
+    owns thread_id,
+    owns checkpoint_ns,
+    owns channel,
+    owns version,
+    owns blob_type,
+    owns blob_value;
+
+  entity checkpoint_write,
+    owns write_path @key,
+    owns thread_id,
+    owns checkpoint_ns,
+    owns checkpoint_id,
+    owns task_id,
+    owns task_path,
+    owns write_idx,
+    owns channel,
+    owns write_type,
+    owns write_blob;
+
+  attribute cp_path, value string;
+  attribute blob_path, value string;
+  attribute write_path, value string;
+  attribute thread_id, value string;
+  attribute checkpoint_ns, value string;
+  attribute checkpoint_id, value string;
+  attribute parent_checkpoint_id, value string;
+  attribute cp_type, value string;
+  attribute cp_blob, value string;
+  attribute md_type, value string;
+  attribute md_blob, value string;
+  attribute run_id, value string;
+  attribute channel, value string;
+  attribute version, value string;
+  attribute blob_type, value string;
+  attribute blob_value, value string;
+  attribute task_id, value string;
+  attribute task_path, value string;
+  attribute write_idx, value integer;
+  attribute write_type, value string;
+  attribute write_blob, value string;
