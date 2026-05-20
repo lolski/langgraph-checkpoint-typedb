@@ -1,0 +1,4 @@
+# Runtime dependencies packaged as install_requires metadata by //:assemble-pip.
+# Keep in sync with the [project.dependencies] table in pyproject.toml.
+langgraph-checkpoint>=2.0,<5.0
+typedb-driver>=3.8,<4.0.0

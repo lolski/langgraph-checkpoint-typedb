@@ -15,3 +15,8 @@ htmlcov/
 .DS_Store
 .idea/
 .vscode/
+
+# Bazel
+/bazel-*
+.bazel-remote-cache.rc
+MODULE.bazel.lock

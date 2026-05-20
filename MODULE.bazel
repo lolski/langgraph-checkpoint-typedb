@@ -1,0 +1,42 @@
+module(
+    name = "langgraph_checkpoint_typedb",
+    version = "0.0.0",
+    compatibility_level = 1,
+)
+
+# ===========================================================
+# Common
+# ===========================================================
+
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "rules_pkg", version = "1.0.1")
+
+# ===========================================================
+# Languages & toolchains
+# ===========================================================
+
+# Python
+bazel_dep(name = "rules_python", version = "1.0.0")
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    is_default = True,
+    python_version = "3.11",
+)
+
+# ===========================================================
+# TypeDB repos
+# ===========================================================
+
+bazel_dep(name = "typedb_dependencies", version = "0.0.0")
+git_override(
+    module_name = "typedb_dependencies",
+    remote = "https://github.com/typedb/dependencies",
+    commit = "32a7fde17ad17b775a8ccc0867c87f119749e7ea",
+)
+
+bazel_dep(name = "typedb_bazel_distribution", version = "0.0.0")
+git_override(
+    module_name = "typedb_bazel_distribution",
+    remote = "https://github.com/typedb/bazel-distribution",
+    commit = "4e400ddcc52da12809db323874eb3516ee9ab5c3",
+)

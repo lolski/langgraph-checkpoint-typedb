@@ -1,0 +1,5 @@
+try-import ./.bazel-remote-cache.rc
+
+build --incompatible_strict_action_env --enable_runfiles --legacy_external_runfiles
+run --incompatible_strict_action_env
+test --incompatible_strict_action_env

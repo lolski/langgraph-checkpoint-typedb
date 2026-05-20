@@ -1,0 +1,44 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  # Snapshot of every master commit, versioned by commit SHA.
+  deploy-pip-snapshot:
+    name: Deploy pip snapshot
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: bazelbuild/setup-bazelisk@v3
+
+      - name: Deploy pip snapshot
+        env:
+          DEPLOY_PIP_USERNAME: ${{ secrets.DEPLOY_PIP_USERNAME }}
+          DEPLOY_PIP_PASSWORD: ${{ secrets.DEPLOY_PIP_PASSWORD }}
+        run: |
+          bazel run --define version=$(git rev-parse HEAD) //src:deploy-pip -- snapshot
+
+  # Release on a v* tag, versioned by the VERSION file.
+  deploy-pip-release:
+    name: Deploy pip release
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: bazelbuild/setup-bazelisk@v3
+
+      - name: Deploy pip release
+        env:
+          DEPLOY_PIP_USERNAME: ${{ secrets.DEPLOY_PIP_USERNAME }}
+          DEPLOY_PIP_PASSWORD: ${{ secrets.DEPLOY_PIP_PASSWORD }}
+        run: |
+          bazel run --define version=$(cat VERSION) //src:deploy-pip -- release
