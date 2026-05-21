@@ -19,14 +19,6 @@ jobs:
 
       - uses: bazelbuild/setup-bazelisk@v3
 
-      - name: Debug secret shape
-        env:
-          U: ${{ secrets.REPO_TYPEDB_USERNAME }}
-          P: ${{ secrets.REPO_TYPEDB_PASSWORD }}
-        run: |
-          echo "username length: ${#U}"
-          echo "password length: ${#P}"
-
       - name: Deploy pip snapshot
         env:
           # Snapshot deploys to Cloudsmith (python.cloudsmith.io/typedb/public-snapshot)
