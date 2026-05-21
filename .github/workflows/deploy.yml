@@ -21,8 +21,9 @@ jobs:
 
       - name: Deploy pip snapshot
         env:
-          DEPLOY_PIP_USERNAME: ${{ secrets.DEPLOY_PIP_USERNAME }}
-          DEPLOY_PIP_PASSWORD: ${{ secrets.DEPLOY_PIP_PASSWORD }}
+          # Snapshot deploys to Cloudsmith (python.cloudsmith.io/typedb/public-snapshot)
+          DEPLOY_PIP_USERNAME: ${{ secrets.REPO_TYPEDB_USERNAME }}
+          DEPLOY_PIP_PASSWORD: ${{ secrets.REPO_TYPEDB_PASSWORD }}
         run: |
           bazel run --define version=$(git rev-parse HEAD) //src:deploy-pip -- snapshot
 
@@ -38,7 +39,8 @@ jobs:
 
       - name: Deploy pip release
         env:
-          DEPLOY_PIP_USERNAME: ${{ secrets.DEPLOY_PIP_USERNAME }}
-          DEPLOY_PIP_PASSWORD: ${{ secrets.DEPLOY_PIP_PASSWORD }}
+          # Release deploys to PyPI (upload.pypi.org/legacy)
+          DEPLOY_PIP_USERNAME: ${{ secrets.REPO_PYPI_USERNAME }}
+          DEPLOY_PIP_PASSWORD: ${{ secrets.REPO_PYPI_PASSWORD }}
         run: |
           bazel run --define version=$(cat VERSION) //src:deploy-pip -- release
